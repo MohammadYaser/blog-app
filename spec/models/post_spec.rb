@@ -44,5 +44,4 @@ RSpec.describe Post, type: :model do
     my_user.reload
     expect(my_user.post_counter).to eq(2)
   end
-
 end
