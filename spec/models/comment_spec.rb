@@ -1,15 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  describe 'Method of Comment model' do
-    it 'Should update the comments_counter of a post' do
-      user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
-                         bio: 'Teacher from Mexico.')
-      post = Post.create(author: user, title: 'Hello', text: 'This is my first post')
-      comment = Comment.create(post:, user:, text: 'Hi Tom!')
+  it 'is valid with a user and a post' do
+    user = User.create(name: 'Tom', post_counter: 0)
+    post = user.posts.create(title: 'My Post', comments_counter: 0, likes_counter: 0)
+    comment = post.comments.new(user:, text: 'Nice post!')
+    expect(comment).to be_valid
+  end
 
-      comment.update_comment_counter_post
-      expect(post.reload.comments_counter).to eq(1)
-    end
+  it 'is not valid without a user' do
+    post = Post.create(author: User.new, title: 'My Post', comments_counter: 0, likes_counter: 0)
+    comment = post.comments.new(user: nil, text: 'Nice post!')
+    comment.valid?
+    expect(comment.errors[:user]).to include('must exist')
+  end
+
+  it 'is not valid without text' do
+    user = User.create(name: 'Tom', post_counter: 0)
+    post = user.posts.create(title: 'My Post', comments_counter: 0, likes_counter: 0)
+    comment = post.comments.new(user:, text: nil)
+    comment.valid?
+    expect(comment.errors[:text]).to include("can't be blank")
+  end
+
+  it 'updates the comments counter for a post' do
+    user = User.create(name: 'Tom', post_counter: 1)
+    post = user.posts.create(title: 'My Post', comments_counter: 0, likes_counter: 0)
+    comment = post.comments.create(user:, text: 'Nice post!')
+
+    comment.increment_post_comments_counter
+
+    post.reload
+    expect(post.comments_counter).to eq(2)
   end
 end
