@@ -20,7 +20,7 @@
 
 # 📖 Blog App <a name="about-project"></a>
 
-**Blog App** is a comprehensive web platform designed for users to seamlessly create and oversee their blog posts. Experience a dynamic online community where users can actively engage through features such as commenting and liking posts. This project adheres to a meticulously planned development journey, encompassing milestones like data model creation, robust validations, efficient controllers, immersive views, secure authentication, fine-grained authorization, and the establishment of API endpoints for enhanced functionality.
+**Blog Web App** is a comprehensive web platform designed for users to seamlessly create and oversee their blog posts. Experience a dynamic online community where users can actively engage through features such as commenting and liking posts. This project adheres to a meticulously planned development journey, encompassing milestones like data model creation, robust validations, efficient controllers, immersive views, secure authentication, fine-grained authorization, and the establishment of API endpoints for enhanced functionality.
 
 ## 🛠 Built With <a name="built-with"></a>
 Ruby on Rails, Visual Studia Code, WSL
