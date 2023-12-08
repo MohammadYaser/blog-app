@@ -1,8 +1,7 @@
-# spec/factories/comments.rb
 FactoryBot.define do
-    factory :comment do
-      text { 'Sample Comment' }
-      association :user
-      association :post
-    end
+  factory :comment do
+    text { 'hi how are you!' }
+    association :user, factory: :user
+    association :post, factory: :post
   end
+end

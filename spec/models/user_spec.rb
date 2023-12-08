@@ -1,43 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it 'is considered valid with a username and a non-negative post count' do
-    my_user = User.new(name: 'Ali', post_counter: 0)
-    expect(my_user).to be_valid
+  it 'is not valid without a name' do
+    user = FactoryBot.build(:user, name: nil)
+    expect(user).not_to be_valid
   end
 
-  it 'is considered invalid without a username' do
-    my_user = User.new(name: nil)
-    my_user.valid?
-    expect(my_user.errors[:name]).to include("can't be blank")
+  it 'is not valid with a negative posts_counter' do
+    user = FactoryBot.build(:user, posts_counter: -1)
+    expect(user).not_to be_valid
   end
 
-  it 'is considered invalid with a negative post count' do
-    my_user = User.new(name: 'Tom', post_counter: -1)
-    my_user.valid?
-    expect(my_user.errors[:post_counter]).to include('must be greater than or equal to 0')
+  it 'is valid with a non-negative posts_counter' do
+    user = FactoryBot.build(:user, posts_counter: 0)
+    expect(user).to be_valid
   end
 
-  it 'returns the 3 most recent posts' do
-    my_user = User.create(name: 'Tom', post_counter: 0)
-    4.times { my_user.posts.create(title: 'My Post', comments_counter: 0, likes_counter: 0) }
+  describe '#three_recent_posts' do
+    it 'returns three most recent posts' do
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:post, author: user, created_at: 4.days.ago)
+      recent_posts = FactoryBot.create_list(:post, 3, author: user)
 
-    recent_posts = my_user.recent_posts
-
-    expect(recent_posts.count).to eq(3)
-    expect(recent_posts.first).to eq(my_user.posts.last)
+      expect(user.three_recent_posts).to eq(recent_posts.reverse)
+    end
   end
-
-  # New test for the recent_posts method
-  # New test for the recent_posts method
-  it 'returns all posts if the user has fewer than 3 posts' do
-    my_user = User.create(name: 'John', post_counter: 0)
-    2.times { my_user.posts.create(title: 'Another Post', comments_counter: 0, likes_counter: 0) }
-
-    recent_posts = my_user.recent_posts
-
-    expect(recent_posts.count).to eq(2)
-    expect(recent_posts).to match_array(my_user.posts)
-  end
-
 end

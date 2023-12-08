@@ -8,14 +8,14 @@ default: &default
 
 development:
   <<: *default
-  database: blog_development
+  database: blogapp_development
 test:
   <<: *default
-  database: blog_test
+  database: blogapp_test
 
 
 production:
   <<: *default
-  database: blog_production
+  database: blogapp_production
   username: blog
-  password: <%= ENV["BLOG_DATABASE_PASSWORD"] %>
+  password: <%= ENV["BLOGAPP_DATABASE_PASSWORD"] %>

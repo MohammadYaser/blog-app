@@ -1,47 +1,47 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  it 'is considered valid with a title, comments count, and likes count within acceptable ranges' do
-    my_user = User.create(name: 'yaser', post_counter: 0)
-    post = my_user.posts.new(title: 'Some Post', comments_counter: 0, likes_counter: 0)
-    expect(post).to be_valid
+  let(:user) { FactoryBot.create(:user) }
+
+  it 'is not valid without a title' do
+    post = FactoryBot.build(:post, title: nil, author: user)
+    expect(post).to be_invalid, "Expected post to be invalid without a title"
   end
 
-  it 'is considered invalid without a title' do
-    my_user = User.create(name: 'yaser', post_counter: 0)
-    post = my_user.posts.new(title: nil)
-    post.valid?
-    expect(post.errors[:title]).to include("can't be blank")
+  it 'is valid with a title and other attributes' do
+    post = FactoryBot.build(:post, author: user)
+    expect(post).to be_valid, "Expected post to be valid with a title and other attributes"
   end
 
   it 'is not valid with a title exceeding 250 characters' do
-    my_user = User.create(name: 'yaser', post_counter: 0)
-    post = my_user.posts.new(title: 'A' * 251)
-    post.valid?
-    expect(post.errors[:title]).to include('is too long (maximum is 250 characters)')
+    post = FactoryBot.build(:post, title: 'a' * 251, author: user)
+    expect(post).to be_invalid, "Expected post to be invalid with a title exceeding 250 characters"
   end
 
   it 'is not valid with a negative comments_counter' do
-    my_user = User.create(name: 'yaser', post_counter: 0)
-    post = my_user.posts.new(title: 'My Post', comments_counter: -1, likes_counter: 0)
-    post.valid?
-    expect(post.errors[:comments_counter]).to include('must be greater than or equal to 0')
+    post = FactoryBot.build(:post, comments_counter: -1, author: user)
+    expect(post).to be_invalid, "Expected post to be invalid with a negative comments counter"
   end
 
   it 'is not valid with a negative likes_counter' do
-    my_user = User.create(name: 'yaser', post_counter: 0)
-    post = my_user.posts.new(title: 'My Post', comments_counter: 0, likes_counter: -1)
-    post.valid?
-    expect(post.errors[:likes_counter]).to include('must be greater than or equal to 0')
+    post = FactoryBot.build(:post, likes_counter: -1, author: user)
+    expect(post).to be_invalid, "Expected post to be invalid with a negative likes counter"
   end
 
-  it 'updates the posts counter for a my_user' do
-    my_user = User.create(name: 'yaser', post_counter: 0)
-    post = my_user.posts.create(title: 'My Post', comments_counter: 0, likes_counter: 0)
+  it 'returns five most recent comments' do
+    post = FactoryBot.create(:post, author: user)
+    FactoryBot.create_list(:comment, 3, post: post, created_at: 4.days.ago)
+    recent_comments = FactoryBot.create_list(:comment, 5, post: post)
 
-    post.increment_user_post_counter
+    expect(post.five_most_recent_comments).to eq(recent_comments.reverse), "Expected five most recent comments to be returned"
+  end
 
-    my_user.reload
-    expect(my_user.post_counter).to eq(2)
+  it 'updates author\'s posts_counter after save' do
+    expect(user.posts_counter).to eq(0)
+
+    FactoryBot.create(:post, author: user)
+    user.reload
+
+    expect(user.posts_counter).to eq(1), "Expected author's posts counter to be updated after save"
   end
 end

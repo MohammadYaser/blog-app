@@ -1,12 +1,13 @@
-# spec/models/like_spec.rb
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  let(:user) { create(:user) }
-  let(:post) { create(:post) }
+  it 'it can update post likes_counter after save' do
+    user = FactoryBot.create(:user)
+    post = FactoryBot.create(:post, author: user)
 
-  describe 'associations' do
-    it { should belong_to(:user) }
-    it { should belong_to(:post) }
+    expect {
+      FactoryBot.create(:like, user: user, post: post)
+      post.reload
+    }.to change { post.likes_counter }.from(0).to(1)
   end
 end

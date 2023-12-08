@@ -1,5 +1,5 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'factory_bot_rails'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -16,22 +16,13 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
   config.use_transactional_fixtures = true
-
   config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
-  # rubocop:disable Lint/ShadowingOuterLocalVariable
-  Shoulda::Matchers.configure do |config|
-    config.integrate do |with|
-      with.test_framework :rspec
-      with.library :rails
-    end
+  # arbitrary gems may also be filtered via:
+  # config.filter_gems_from_backtrace("gem name")
+  RSpec.configure do |rspec_config|
+    rspec_config.include FactoryBot::Syntax::Methods
   end
-  # rubocop:enable Lint/ShadowingOuterLocalVariable
-  # rails_helper.rb
-  RSpec.configure do |config|
-    config.include FactoryBot::Syntax::Methods
-  end
-
 end
