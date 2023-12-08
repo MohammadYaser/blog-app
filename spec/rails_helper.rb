@@ -29,4 +29,9 @@ RSpec.configure do |config|
     end
   end
   # rubocop:enable Lint/ShadowingOuterLocalVariable
+  # rails_helper.rb
+  RSpec.configure do |config|
+    config.include FactoryBot::Syntax::Methods
+  end
+
 end

@@ -27,4 +27,17 @@ RSpec.describe User, type: :model do
     expect(recent_posts.count).to eq(3)
     expect(recent_posts.first).to eq(my_user.posts.last)
   end
+
+  # New test for the recent_posts method
+  # New test for the recent_posts method
+  it 'returns all posts if the user has fewer than 3 posts' do
+    my_user = User.create(name: 'John', post_counter: 0)
+    2.times { my_user.posts.create(title: 'Another Post', comments_counter: 0, likes_counter: 0) }
+
+    recent_posts = my_user.recent_posts
+
+    expect(recent_posts.count).to eq(2)
+    expect(recent_posts).to match_array(my_user.posts)
+  end
+
 end
