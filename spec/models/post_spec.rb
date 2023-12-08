@@ -5,27 +5,27 @@ RSpec.describe Post, type: :model do
 
   it 'is not valid without a title' do
     post = FactoryBot.build(:post, title: nil, author: user)
-    expect(post).to be_invalid, "Expected post to be invalid without a title"
+    expect(post).to be_invalid, 'Expected post to be invalid without a title'
   end
 
   it 'is valid with a title and other attributes' do
     post = FactoryBot.build(:post, author: user)
-    expect(post).to be_valid, "Expected post to be valid with a title and other attributes"
+    expect(post).to be_valid, 'Expected post to be valid with a title and other attributes'
   end
 
   it 'is not valid with a title exceeding 250 characters' do
     post = FactoryBot.build(:post, title: 'a' * 251, author: user)
-    expect(post).to be_invalid, "Expected post to be invalid with a title exceeding 250 characters"
+    expect(post).to be_invalid, 'Expected post to be invalid with a title exceeding 250 characters'
   end
 
   it 'is not valid with a negative comments_counter' do
     post = FactoryBot.build(:post, comments_counter: -1, author: user)
-    expect(post).to be_invalid, "Expected post to be invalid with a negative comments counter"
+    expect(post).to be_invalid, 'Expected post to be invalid with a negative comments counter'
   end
 
   it 'is not valid with a negative likes_counter' do
     post = FactoryBot.build(:post, likes_counter: -1, author: user)
-    expect(post).to be_invalid, "Expected post to be invalid with a negative likes counter"
+    expect(post).to be_invalid, 'Expected post to be invalid with a negative likes counter'
   end
 
   it 'returns five most recent comments' do
@@ -33,7 +33,8 @@ RSpec.describe Post, type: :model do
     FactoryBot.create_list(:comment, 3, post: post, created_at: 4.days.ago)
     recent_comments = FactoryBot.create_list(:comment, 5, post: post)
 
-    expect(post.five_most_recent_comments).to eq(recent_comments.reverse), "Expected five most recent comments to be returned"
+    expect(post.five_most_recent_comments).to eq(recent_comments.reverse),
+                                              'Expected five most recent comments to be returned'
   end
 
   it 'updates author\'s posts_counter after save' do

@@ -14,7 +14,8 @@ class Like < ApplicationRecord
 
   # Private Method: update_likes_counter
   # - This method is called in the after_save callback to update the likes_counter of the associated post.
-  # - It fetches the current count of likes associated with the post and updates the likes_counter attribute of the post.
+  # - It fetches the current count of likes associated
+  # with the post and updates the likes_counter attribute of the post.
   def update_likes_counter
     post.update(likes_counter: post.likes.count)
   end
