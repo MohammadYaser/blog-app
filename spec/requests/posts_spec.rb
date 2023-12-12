@@ -26,7 +26,7 @@ RSpec.describe 'Posts', type: :request do
 
     # Example: Check if the response body includes specific text
     it 'includes correct placeholder text in the response body' do
-      expect(response.body).to include("User 1 all posts")
+      expect(response.body).to include('User 1 all posts')
     end
   end
 
@@ -47,7 +47,7 @@ RSpec.describe 'Posts', type: :request do
 
     # Example: Check if the response body includes specific text
     it 'includes correct placeholder text in the response body' do
-      expect(response.body).to include("post 1 by user 1")
+      expect(response.body).to include('post 1 by user 1')
     end
   end
 end
