@@ -1,1 +1,21 @@
-<h1>List of all users:</h1>
+<!-- Container for displaying user information -->
+<div class="container">
+  <!-- Iterate through each user in the @users collection -->
+  <% @users.each do |user| %>
+    <!-- User information section for each user -->
+    <div class="user_info">
+      <!-- User image section -->
+      <div class="img">
+        <!-- Display user photo using Rails image_tag helper -->
+        <%= image_tag user.photo, alt: "User Photo", class: "user-photo" %>
+      </div>
+      <!-- User details section -->
+      <div class="user">
+        <!-- Display user name with a link to user profile -->
+        <h2><%= link_to user.name, user_path(user) %></h2>
+        <!-- Display the number of posts by the user -->
+        <p><strong>Number of Posts:</strong> <%= user.posts.count %></p>
+      </div>
+    </div>
+  <% end %>
+</div>

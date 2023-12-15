@@ -1,1 +1,24 @@
-<h1>post 1 by user 1</h1>
+<!-- Container for displaying post and comments -->
+<div class="container">
+  <!-- Post section -->
+  <div class="post">
+    <!-- Display post title -->
+    <h4>Post <%= @post.title %></h4>
+    <!-- Display the count of comments and likes for the post -->
+    <p class="count">Comments: <%= @post.comments.count %> | Likes: <%= @post.likes.count %></p>
+    <!-- Display post content -->
+    <p><%= @post.text %></p>
+  </div>
+
+  <!-- Comments section -->
+  <div class="comments">
+    <!-- Iterate through each comment for the post -->
+    <% @post.comments.each do |comment| %>
+      <!-- Individual comment section -->
+      <div class="comment">
+        <!-- Display comment author's name and the comment text -->
+        <p><%= comment.author.name %>: <%= comment.text %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

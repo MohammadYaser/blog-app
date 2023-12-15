@@ -1,1 +1,40 @@
-<h1>User 1 all posts</h1>
+<div class="container">
+  <!-- User Information Section -->
+  <div class="user_info">
+    <div class="img">
+      <!-- Display user photo using Rails image_tag helper -->
+      <%= image_tag @user.photo, alt: "User Photo", class: "user-photo" %>
+    </div>
+    <div class="user">
+      <!-- Display user name with a link to user profile -->
+      <h2><%= link_to @user.name, user_path(@user) %></h2>
+      <!-- Display the number of posts by the user -->
+      <p><strong>Number of Posts:</strong> <%= @user.posts.count %></p>
+    </div>
+  </div>
+
+  <!-- Display the two most recent posts by the user -->
+  <% @posts.limit(2).each do |post| %>
+    <div class="post">
+      <h4>Post</h4>
+      <!-- Display the text content of the post -->
+      <p><%= post.text %></p>
+      <!-- Display the count of comments and likes for the post -->
+      <p class="count">Comments: <%= post.comments.count %> | Likes: <%= post.likes.count %></p>
+    </div>
+
+    <!-- Display the five most recent comments for each post -->
+    <div class="comments">
+      <% post.five_most_recent_comments.each do |comment| %>
+        <div class="comment">
+          <!-- Display the author's name with a link to their profile and the comment text -->
+          <p><%= link_to comment.author.name, user_path(comment.author) %>: <%= comment.text %></p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Link to a paginated view of all user posts -->
+  <%= link_to 'Pagination', user_posts_path(@user), class: 'button' %>
+  
+</div>

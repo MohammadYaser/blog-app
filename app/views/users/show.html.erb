@@ -1,1 +1,39 @@
-<h1>User one</h1>
+<!-- Container for displaying user information -->
+<div class="container">
+  <!-- User information section -->
+  <div class="user_info">
+    <!-- User image section -->
+    <div class="img">
+      <!-- Display user photo using Rails image_tag helper -->
+      <%= image_tag @user.photo, alt: "User Photo", class: "user-photo" %>
+    </div>
+    <!-- User details section -->
+    <div class="user">
+      <!-- Display user name -->
+      <h2><%= @user.name %></h2>
+      <!-- Display the number of posts by the user -->
+      <p><strong>Number of Posts:</strong> <%= @user.posts.count %></p>
+    </div>
+  </div>
+  <!-- User biography section -->
+  <div class="user_bio">
+    <!-- Bio heading -->
+    <p>Bio</p>
+    <!-- Display user bio -->
+    <p><%= @user.bio %></p>
+  </div>
+  <!-- Display three most recent posts by the user -->
+  <% @user.three_recent_posts.each_with_index do |post, index| %>
+    <!-- Individual post section -->
+    <div class="post">
+      <!-- Display post title with a link to the post -->
+      <h4>Post <%= index + 1 %>: <%= link_to post.title, user_post_path(@user, post) %></h4>
+      <!-- Display post content -->
+      <p><%= post.text %></p>
+      <!-- Display the count of comments and likes for the post -->
+      <p class="count">Comments: <%= post.comments.count %> | Likes: <%= post.likes.count %></p>
+    </div>
+  <% end %>
+  <!-- Link to view all posts by the user -->
+  <%= link_to "See all posts", user_posts_path(@user), class: 'button' %>
+</div>
