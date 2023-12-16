@@ -15,13 +15,18 @@
 
   <!-- Display the two most recent posts by the user -->
   <% @posts.each do |post| %>
+  <!-- Wrap the entire post div with a clickable link -->
+  <%= link_to user_post_path(@user, post) do %>
     <div class="post">
-      <h4>Post: <%= link_to post.title, user_post_path(@user, post) %></h4>
+      <!-- Display the post title -->
+      <h4>Post: <%= post.title %></h4>
       <!-- Display the text content of the post -->
       <p><%= post.text %></p>
       <!-- Display the count of comments and likes for the post -->
       <p class="count">Comments: <%= post.comments.count %> | Likes: <%= post.likes.count %></p>
     </div>
+  <% end %>
+
 
     <!-- Display the five most recent comments for each post -->
     <div class="comments">
