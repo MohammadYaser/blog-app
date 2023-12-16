@@ -14,9 +14,9 @@
   </div>
 
   <!-- Display the two most recent posts by the user -->
-  <% @posts.limit(2).each do |post| %>
+  <% @posts.each do |post| %>
     <div class="post">
-      <h4>Post</h4>
+      <h4>Post: <%= link_to post.title, user_post_path(@user, post) %></h4>
       <!-- Display the text content of the post -->
       <p><%= post.text %></p>
       <!-- Display the count of comments and likes for the post -->
@@ -28,13 +28,13 @@
       <% post.five_most_recent_comments.each do |comment| %>
         <div class="comment">
           <!-- Display the author's name with a link to their profile and the comment text -->
-          <p><%= link_to comment.author.name, user_path(comment.author) %>: <%= comment.text %></p>
+          <p><%= link_to comment.user.name, user_path(comment.user) %>: <%= comment.text %></p>
         </div>
       <% end %>
     </div>
   <% end %>
 
   <!-- Link to a paginated view of all user posts -->
-  <%= link_to 'Pagination', user_posts_path(@user), class: 'button' %>
+  <%= link_to 'Pagination', user_posts_path(@user), class: 'btn' %>
   
 </div>
