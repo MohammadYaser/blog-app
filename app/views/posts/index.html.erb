@@ -1,5 +1,8 @@
 <div class="container">
   <!-- User Information Section -->
+  <button>
+  <%= link_to "New post", new_user_post_path(@user), class: "back" %>
+</button>
   <div class="user_info">
     <div class="img">
       <!-- Display user photo using Rails image_tag helper -->
