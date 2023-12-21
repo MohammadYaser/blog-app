@@ -17,19 +17,16 @@ RSpec.feature 'User Index Page', type: :feature do
     visit users_path
 
     users.each do |user|
-      # Check if the user's photo is present in the page
       expect(page).to have_css("img[src*='#{user.photo}'][alt='User Photo'][class='user-photo']")
     end
   end
 
   scenario 'User can see the number of posts each user has written' do
-    # Create posts for each user
     users.each { |user| create_list(:post, 2, author: user) }
 
     visit users_path
 
     users.each do |user|
-      # Check if the user's post count is present in the page
       expect(page).to have_content("Number of Posts: #{user.posts.count}")
     end
   end
@@ -37,10 +34,8 @@ RSpec.feature 'User Index Page', type: :feature do
   scenario 'Clicking on a user redirects to their show page' do
     visit users_path
 
-    # Click on the first user's name link
     click_link(users.first.name)
 
-    # Expect to be redirected to the user's show page
     expect(current_path).to eq(user_path(users.first))
  end
 end
