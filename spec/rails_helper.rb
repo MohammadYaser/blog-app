@@ -1,3 +1,4 @@
+require 'faker'
 require 'spec_helper'
 require 'factory_bot_rails'
 ENV['RAILS_ENV'] ||= 'test'
