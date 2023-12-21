@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   # Display a list of posts for a specific user
   def index
     # Retrieve posts for the specified user
-    @posts = Post.where(author_id: params[:user_id])
+    @posts = Post.includes(:author, :comments).where(author_id: params[:user_id])
     # Retrieve the user associated with the posts
     @user = User.find(params[:user_id])
   end
@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # Display details of a specific post
   def show
     # Retrieve the post based on the provided ID
-    @post = Post.find(params[:id])
+    @post = Post.includes(:author, :comments, :likes).find(params[:id])
     # Retrieve the user associated with the post
     @user = User.find(@post.author_id)
   end
