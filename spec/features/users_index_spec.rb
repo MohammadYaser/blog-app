@@ -37,5 +37,5 @@ RSpec.feature 'User Index Page', type: :feature do
     click_link(users.first.name)
 
     expect(current_path).to eq(user_path(users.first))
- end
+  end
 end

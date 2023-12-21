@@ -29,7 +29,7 @@ RSpec.describe 'User Show Page', type: :feature do
   it 'displays some of the post\'s body' do
     expect(page).to have_content(@posts.first.text)
   end
-  
+
   it 'displays how many comments a post has' do
     create_list(:comment, 3, user: @user, post: @posts.first)
     visit user_path(@user)
@@ -41,7 +41,4 @@ RSpec.describe 'User Show Page', type: :feature do
     visit user_path(@user)
     expect(page).to have_content("Likes: #{@posts.first.likes.count}")
   end
-
-  
-  
 end

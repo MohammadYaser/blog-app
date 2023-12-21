@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'User Show Page', type: :feature do
   before(:each) do
-    @user1 = User.create(name: 'John', photo: 'https://icons.iconarchive.com/icons/iconsmind/outline/256/User-icon.png', bio: 'Lorem ipsum.',
+    @user1 = User.create(name: 'John', photo: 'https://icons.iconarchive.com/icons/iconsmind/outline/256/User-icon.png',
+                         bio: 'Lorem ipsum.',
                          posts_counter: 0)
     @post = create(:post, author: @user1, title: 'some title')
     visit user_path(@user1)

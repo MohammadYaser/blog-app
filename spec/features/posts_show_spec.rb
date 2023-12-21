@@ -16,12 +16,12 @@ RSpec.describe 'Post Show Page', type: :feature do
     expect(page).to have_content(@post.title)
   end
   it 'displays the number of comments a post has' do
-    expect(page).to have_content("Comments: 💬2")
+    expect(page).to have_content('Comments: 💬2')
   end
   it 'displays the number of likes a post has' do
     expect(page).to have_content(@post1.likes_counter)
   end
-  
+
   let!(:user1) { User.create(name: 'Yaser', photo: 'https://avatars.githubusercontent.com/u/130588108?v=4') }
   let!(:post1) { Post.create(author_id: user1.id, title: 'Test post 1', text: 'Ruby on Rails.') }
   let!(:comment1) { Comment.create(user: user1, post: post1, text: 'Hello there!') }
@@ -50,5 +50,4 @@ RSpec.describe 'Post Show Page', type: :feature do
     expect(page).to have_content(comment1.text)
     expect(page).to have_content(comment2.text)
   end
-
 end
