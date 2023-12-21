@@ -105,3 +105,34 @@ a:hover {
   padding: 10px;
   text-align: start;
 }
+
+.btn-comment,
+.btn-like {
+  float: left;
+  margin-left: 1%;
+}
+
+.form {
+  display: flex;
+  margin-top: 1%;
+}
+
+.like {
+  background-color: #007bff;
+  margin: 10px 110px;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.new-btn {
+  float: left;
+  margin-left: 1%;
+  border: 2px solid #333;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 5px;
+  color: black;
+}

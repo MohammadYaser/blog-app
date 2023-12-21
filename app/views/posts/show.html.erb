@@ -1,24 +1,36 @@
-<!-- Container for displaying post and comments -->
+<!-- Container for displaying content -->
 <div class="container">
-  <!-- Post section -->
+  <!-- Flash messages -->
+  <% flash.each do |key, value| %>
+    <div class="flash <%= key %>">
+      <%= value %>
+    </div>
+  <% end %>
+
+  <!-- Display details of the post -->
   <div class="post">
-    <!-- Display post title -->
+    <!-- Post title -->
     <h4>Post <%= @post.title %></h4>
-    <!-- Display the count of comments and likes for the post -->
-    <p class="count">Comments: <%= @post.comments.count %> | Likes: <%= @post.likes.count %></p>
-    <!-- Display post content -->
+    <!-- Count of comments and likes for the post -->
+    <p class="count">Comments: 💬<%= @post.comments.count %> | Likes: 📝<%= @post.likes.count %></p>
+    <!-- Post content -->
     <p><%= @post.text %></p>
   </div>
 
-  <!-- Comments section -->
+  <!-- Display comments for the post -->
   <div class="comments">
-    <!-- Iterate through each comment for the post -->
     <% @post.comments.each do |comment| %>
       <!-- Individual comment section -->
       <div class="comment">
-        <!-- Display comment author's name and the comment text -->
-        <p><%= comment.user.name %>: <%= comment.text %></p>
+        <!-- Comment author and text -->
+        <p>👤<%= comment.user.name %>: <%= comment.text %></p>
       </div>
     <% end %>
   </div>
+
+  <!-- Link to create a new comment -->
+  <%= link_to 'Create New Comment 💬', new_user_post_comment_path(@user, @post), class: 'btn-comment' %>
+
+  <!-- Link to like the post -->
+  <%= link_to 'Like 👍', new_user_post_like_path(@user, @post), class: 'btn-like' %>
 </div>

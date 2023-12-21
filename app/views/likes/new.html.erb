@@ -1,0 +1,10 @@
+<!-- Heading indicating the option to like the post -->
+<h3 style="color: #336699; margin: 12px">If you Like the post just Click the button 👍😍</h3>
+
+<!-- Form for submitting a like on the post -->
+<%= form_with model: [@user, @post, @like], url: user_post_likes_path(@user, @post), method: :post do |f| %>
+  <div>
+    <!-- Submit button for liking the post -->
+    <%= f.submit "👍 Like", class: 'like' %>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+<!-- Link to go back to the post's show page -->
+<%= link_to 'Back', user_post_path(@post.author, @post) %>
+
+<!-- Section to add a new comment -->
+<h2>Add comment</h2>
+
+<!-- Form for adding a new comment -->
+<%= form_with(model: [@post, @comment], url: user_post_comments_path(@post.author, @post), class: "form") do |form| %>
+  <!-- Text area for entering the comment text -->
+  <%= form.text_area :text %>
+
+  <!-- Submit button to add the comment -->
+  <%= form.submit 'Add comment', class: 'submit' %>
+<% end %>
