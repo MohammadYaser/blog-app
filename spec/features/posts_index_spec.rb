@@ -54,5 +54,4 @@ RSpec.describe 'User Show Page', type: :feature do
   scenario 'Displays the correct number of likes for the post' do
     expect(page).to have_content("Likes: #{post.likes_counter}")
   end
-
 end
