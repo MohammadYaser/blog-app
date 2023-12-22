@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User Show Page', type: :feature do
-  let!(:user) { User.create(name: 'Ajrass', photo: 'https://avatars.githubusercontent.com/u/130588108?v=4') }
+  let!(:user) { User.create(name: 'Yaser', photo: 'https://avatars.githubusercontent.com/u/130588108?v=4') }
   let!(:post) { Post.create(author_id: user.id, title: 'Test Post', text: 'Hello world!') }
   let!(:comment1) { Comment.create(user: user, post: post, text: 'Hello reviewer!') }
   let!(:comment2) { Comment.create(user: user, post: post, text: 'Hope everything is just fine for you!') }
@@ -47,6 +47,10 @@ RSpec.describe 'User Show Page', type: :feature do
     expect(page).to have_css('.pagination')
   end
 
+  scenario 'Displays the correct number of comments for the post' do
+    expect(page).to have_content("Comments: #{post.comments_counter}")
+  end
 
+  
 
 end
