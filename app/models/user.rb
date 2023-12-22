@@ -1,5 +1,9 @@
 # The User class represents users in the application.
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
   # Associations:
   # - A user has many posts where the user is the author.
   # - A user has many likes.
