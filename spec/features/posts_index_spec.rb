@@ -6,7 +6,7 @@ RSpec.describe 'User Show Page', type: :feature do
   before(:each) do
     @user = create(:user)
     @posts = create_list(:post, 2, author: @user)
-    visit user_path(@user)
+    visit user_posts_path(@user)
     @comment1 = Comment.create(user: @user1, post: @first_post, text: 'Hi Tom Wonderful!')
   end
 
