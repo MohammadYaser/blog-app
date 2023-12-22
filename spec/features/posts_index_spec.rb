@@ -45,5 +45,4 @@ RSpec.describe 'User Show Page', type: :feature do
     visit user_posts_path(user)
     expect(page).to have_css('.pagination')
   end
-
 end

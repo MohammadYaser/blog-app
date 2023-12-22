@@ -35,7 +35,6 @@ RSpec.describe 'User Show Page', type: :feature do
     expect(page).to have_content(@post2.title)
   end
 
-  
   it 'displays a button to view all posts' do
     expect(page).to have_link('See all posts')
   end
