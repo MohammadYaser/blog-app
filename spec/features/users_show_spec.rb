@@ -8,6 +8,8 @@ RSpec.describe 'User Show Page', type: :feature do
                          bio: 'Lorem ipsum.',
                          posts_counter: 0)
     @post = create(:post, author: @user1, title: 'some title')
+    @post1 = create(:post, author: @user1, title: 'another title')
+    @post2 = create(:post, author: @user1, title: 'and the last title')
     visit user_path(@user1)
   end
 
@@ -27,10 +29,13 @@ RSpec.describe 'User Show Page', type: :feature do
     expect(page).to have_content(@user1.bio)
   end
 
-  it 'displays the post title' do
+  it 'Displays user 3 posts' do
     expect(page).to have_content(@post.title)
+    expect(page).to have_content(@post1.title)
+    expect(page).to have_content(@post2.title)
   end
 
+  
   it 'displays a button to view all posts' do
     expect(page).to have_link('See all posts')
   end
