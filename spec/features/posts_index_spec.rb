@@ -31,6 +31,7 @@ RSpec.describe 'User Show Page', type: :feature do
   end
 
   scenario 'Displays the first comments on a post and total comments' do
+    expect(page).to have_content(comment1.text)
     expect(page).to have_content(comment2.text)
     expect(page).to have_content("Comments: #{post.comments_counter}")
   end
@@ -45,4 +46,7 @@ RSpec.describe 'User Show Page', type: :feature do
     visit user_posts_path(user)
     expect(page).to have_css('.pagination')
   end
+
+
+
 end
