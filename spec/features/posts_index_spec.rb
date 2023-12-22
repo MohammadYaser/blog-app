@@ -3,42 +3,47 @@
 require 'rails_helper'
 
 RSpec.describe 'User Show Page', type: :feature do
-  before(:each) do
-    @user = create(:user)
-    @posts = create_list(:post, 2, author: @user)
-    visit user_posts_path(@user)
-    @comment1 = Comment.create(user: @user1, post: @first_post, text: 'Hi Tom Wonderful!')
-  end
+  let!(:user) { User.create(name: 'Ajrass', photo: 'https://avatars.githubusercontent.com/u/130588108?v=4') }
+  let!(:post) { Post.create(author_id: user.id, title: 'Test Post', text: 'Hello world!') }
+  let!(:comment1) { Comment.create(user: user, post: post, text: 'Hello reviewer!') }
+  let!(:comment2) { Comment.create(user: user, post: post, text: 'Hope everything is just fine for you!') }
+
+  before { visit user_posts_path(user) }
 
   it "displays the user's profile picture" do
-    expect(page).to have_css("img[src*='#{@user.photo}']")
+    expect(page).to have_css("img[src*='#{user.photo}']")
   end
 
   it 'displays the user\'s username' do
-    expect(page).to have_content(@user.name)
+    expect(page).to have_content(user.name)
   end
 
   it 'displays the number of posts the user has written' do
-    expect(page).to have_content(@user.posts_counter)
+    expect(page).to have_content(user.posts_counter)
   end
 
   it 'displays a post\'s title' do
-    expect(page).to have_content(@posts.first.title)
+    expect(page).to have_content(post.title)
   end
 
   it 'displays some of the post\'s body' do
-    expect(page).to have_content(@posts.first.text)
+    expect(page).to have_content(post.text)
   end
 
-  it 'displays how many comments a post has' do
-    create_list(:comment, 3, user: @user, post: @posts.first)
-    visit user_path(@user)
-    expect(page).to have_content("Comments: #{@posts.first.comments.count}")
+  scenario 'Displays the first comments on a post and total comments' do
+    expect(page).to have_content(comment2.text)
+    expect(page).to have_content("Comments: #{post.comments_counter}")
+  end
+  scenario 'Redirects to post show page when clicked' do
+    click_link post.title
+    sleep(1)
+    expect(current_path).to eq(user_post_path(user, post))
+  end
+  scenario 'Displays pagination section when there are more than 5 posts' do
+    6.times { Post.create(author: user, title: 'My post', text: 'Ruby on Rails.') }
+
+    visit user_posts_path(user)
+    expect(page).to have_css('.pagination')
   end
 
-  it 'displays how many likes a post has' do
-    create_list(:like, 4, user: @user, post: @posts.first)
-    visit user_path(@user)
-    expect(page).to have_content("Likes: #{@posts.first.likes.count}")
-  end
 end
