@@ -6,9 +6,13 @@
     <div class="user_info">
       <!-- User image section -->
       <div class="img">
-        <!-- Display user photo using Rails image_tag helper -->
-        <%= image_tag user.photo, alt: "User Photo", class: "user-photo" %>
+        <% if user.photo.present? && Rails.application.assets.find_asset(user.photo) %>
+          <%= image_tag user.photo, alt: "User Photo", class: "user-photo" %>
+        <% else %>
+          <%= image_tag "https://unsplash.com/photos/F_-0BxGuVvo", alt: "Default Photo", class: "user-photo" %>
+        <% end %>
       </div>
+
       <!-- User details section -->
       <div class="user">
         <!-- Display user name with a link to user profile -->
