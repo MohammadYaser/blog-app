@@ -136,3 +136,20 @@ a:hover {
   padding: 5px;
   color: black;
 }
+
+.log-in {
+  width: 30%;
+  display: grid;
+  margin-left: 35%;
+  
+}
+.full-width {
+  width: 100%;
+  height: 40px;
+  margin-top: 10%;
+  font-size: 17px;
+}
+
+.btn-login {
+  margin-top: 30px;
+}
